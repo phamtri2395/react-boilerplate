@@ -16,14 +16,26 @@ var app = express();
  * Hook webpack server
  */
 
-var compiler = webpack(webpackConfig);
+if (process.env.NODE_ENV !== 'production') {
+  var compiler = webpack(webpackConfig);
 
-app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath
-}));
+  app.use(require('webpack-dev-middleware')(compiler, {
+      noInfo: true,
+      publicPath: webpackConfig.output.publicPath,
+      stats: {
+        colors: true,
+        'errors-only': true
+      }
+  }));
 
-app.use(require('webpack-hot-middleware')(compiler));
+  app.use(require('webpack-hot-middleware')(compiler, {
+    log: console.log,
+    path: '/__webpack_hmr',
+    reload : true
+  }));
+} else {
+  app.use(express.static(path.join(__dirname, '../public')));
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, '../views'));
@@ -41,7 +53,6 @@ app.use(require('node-sass-middleware')({
   indentedSyntax: true,
   sourceMap: true
 }));
-app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', router);
 

@@ -6,25 +6,17 @@ var SOURCE_DIR = path.resolve(__dirname, '../client');
 var DEST_DIR = path.resolve(__dirname, '../public/dists');
 
 module.exports = {
-  entry: [
-    path.resolve(SOURCE_DIR, './routes.jsx'),
-    'webpack-hot-middleware/client'
-  ],
-
-  devtool: 'cheap-module-eval-source-map',
+  entry: path.resolve(SOURCE_DIR, './routes.jsx'),
 
   target: 'web',
 
   output: {
     path: DEST_DIR,
-    filename: 'bundle.js',
-    publicPath: '/dists/'
+    filename: 'bundle.js'
   },
 
   plugins: [
     new ExtractTextPlugin('bundle.css', { allChunks: true }),
-
-    new webpack.HotModuleReplacementPlugin(),
 
     new webpack.NoErrorsPlugin(),
 
@@ -38,6 +30,10 @@ module.exports = {
   ],
 
   resolve: {
+    alias: {
+      'react': 'react-lite',
+      'react-dom': 'react-lite'
+    },
     extensions: ['', '.scss', '.css', '.js', '.jsx']
   },
 
@@ -49,11 +45,6 @@ module.exports = {
         exclude: /node_modules/,
         query: {
           presets: ['es2015', 'react', 'stage-0'],
-          "env": {
-            "development": {
-              "presets": ["react-hmre"]
-            }
-          }
         }
       },
       {
