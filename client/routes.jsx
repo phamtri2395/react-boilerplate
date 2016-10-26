@@ -17,10 +17,10 @@ import NoRoute from './containers/NoRoute';
 
 const routes = (
   <Router history={browserHistory}>
-    <Route path='/' component={Root}>
+    <Route path="/" component={Root}>
     </Route>
 
-    <Route path='*' component={NoRoute} />
+    <Route path="*" component={NoRoute} />
   </Router>
 );
 
