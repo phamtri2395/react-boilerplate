@@ -6,7 +6,7 @@
     "start": "node ./index.js",
     "clean": "rimraf ./public/dists",
     "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --progress --colors --config ./utils/webpack.config.prod.js",
-    "build:dev": "npm run clean && cross-env NODE_ENV=production webpack --progress --colors --config ./utils/webpack.config.dev.js",
+    "build:dev": "npm run clean && cross-env NODE_ENV=devlopment webpack --progress --colors --config ./utils/webpack.config.dev.js",
     "build": "npm run build:prod",
     "lint": "./node_modules/.bin/eslint ./client/"
   },
